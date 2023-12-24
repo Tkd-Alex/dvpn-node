@@ -18,6 +18,9 @@ type (
 		Country   string  `json:"country"`
 		Latitude  float64 `json:"latitude"`
 		Longitude float64 `json:"longitude"`
+		Isp       string  `json:"isp"`
+		Org       string  `json:"org"`
+		As        string  `json:"as"`
 	}
 	QOS struct {
 		MaxPeers int `json:"max_peers"`
