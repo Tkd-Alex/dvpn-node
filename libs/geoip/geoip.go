@@ -31,6 +31,9 @@ func Location() (*types.GeoIPLocation, error) {
 		IP        string  `json:"query"`
 		Latitude  float64 `json:"lat"`
 		Longitude float64 `json:"lon"`
+		Isp       string  `json:"isp"`
+		Org       string  `json:"org"`
+		As        string  `json:"as"`
 	}
 
 	if err = json.NewDecoder(resp.Body).Decode(&body); err != nil {
@@ -43,5 +46,8 @@ func Location() (*types.GeoIPLocation, error) {
 		IP:        body.IP,
 		Latitude:  body.Latitude,
 		Longitude: body.Longitude,
+		Isp:       body.Isp,
+		Org:       body.Org,
+		As:        body.As,
 	}, nil
 }

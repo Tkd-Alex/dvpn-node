@@ -6,4 +6,7 @@ type GeoIPLocation struct {
 	IP        string  `json:"ip"`
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
+	Isp       string  `json:"isp"`
+	Org       string  `json:"org"`
+	As        string  `json:"as"`
 }
