@@ -14,6 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/zcalusic/sysinfo"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -150,6 +151,9 @@ func StartCmd() *cobra.Command {
 			}
 			log.Info("Internet speed test result", "data", bandwidth)
 
+			var systeminfo sysinfo.SysInfo
+			systeminfo.GetSysInfo()
+
 			if config.Handshake.Enable {
 				go func() {
 					for {
@@ -214,6 +218,7 @@ func StartCmd() *cobra.Command {
 				WithDatabase(database).
 				WithHandler(router).
 				WithLocation(location).
+				WithSystemInfo(&systeminfo).
 				WithLogger(log).
 				WithService(service)
 

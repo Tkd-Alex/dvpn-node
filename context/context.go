@@ -8,6 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	hubtypes "github.com/sentinel-official/hub/types"
 	tmlog "github.com/tendermint/tendermint/libs/log"
+	"github.com/zcalusic/sysinfo"
 	"gorm.io/gorm"
 
 	geoiptypes "github.com/sentinel-official/dvpn-node/libs/geoip/types"
@@ -16,14 +17,15 @@ import (
 )
 
 type Context struct {
-	bandwidth *hubtypes.Bandwidth
-	client    *lite.Client
-	config    *types.Config
-	database  *gorm.DB
-	handler   http.Handler
-	location  *geoiptypes.GeoIPLocation
-	logger    tmlog.Logger
-	service   types.Service
+	bandwidth  *hubtypes.Bandwidth
+	client     *lite.Client
+	config     *types.Config
+	database   *gorm.DB
+	handler    http.Handler
+	location   *geoiptypes.GeoIPLocation
+	systeminfo *sysinfo.SysInfo
+	logger     tmlog.Logger
+	service    types.Service
 }
 
 func NewContext() *Context {
@@ -36,6 +38,7 @@ func (c *Context) WithConfig(v *types.Config) *Context               { c.config 
 func (c *Context) WithDatabase(v *gorm.DB) *Context                  { c.database = v; return c }
 func (c *Context) WithHandler(v http.Handler) *Context               { c.handler = v; return c }
 func (c *Context) WithLocation(v *geoiptypes.GeoIPLocation) *Context { c.location = v; return c }
+func (c *Context) WithSystemInfo(v *sysinfo.SysInfo) *Context        { c.systeminfo = v; return c }
 func (c *Context) WithLogger(v tmlog.Logger) *Context                { c.logger = v; return c }
 func (c *Context) WithService(v types.Service) *Context              { c.service = v; return c }
 
@@ -49,6 +52,7 @@ func (c *Context) IntervalSetSessions() time.Duration  { return c.Config().Node.
 func (c *Context) IntervalUpdateStatus() time.Duration { return c.Config().Node.IntervalUpdateStatus }
 func (c *Context) ListenOn() string                    { return c.Config().Node.ListenOn }
 func (c *Context) Location() *geoiptypes.GeoIPLocation { return c.location }
+func (c *Context) Systeminfo() *sysinfo.SysInfo        { return c.systeminfo }
 func (c *Context) Log() tmlog.Logger                   { return c.logger }
 func (c *Context) Moniker() string                     { return c.Config().Node.Moniker }
 func (c *Context) Operator() sdk.AccAddress            { return c.client.FromAddress() }
