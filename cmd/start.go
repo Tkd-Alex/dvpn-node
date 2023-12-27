@@ -151,6 +151,7 @@ func StartCmd() *cobra.Command {
 			}
 			log.Info("Internet speed test result", "data", bandwidth)
 
+			// --privileged is required in other to get RAM informatio
 			var systeminfo sysinfo.SysInfo
 			systeminfo.GetSysInfo()
 

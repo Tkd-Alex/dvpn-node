@@ -34,7 +34,10 @@ func HandlerGetStatus(ctx *context.Context) gin.HandlerFunc {
 				Org:       ctx.Location().Org,
 				As:        ctx.Location().As,
 			},
-			Systeminfo:     ctx.Systeminfo(),
+			Systeminfo: &Systeminfo{
+				Cpu:    ctx.Systeminfo().CPU,
+				Memory: ctx.Systeminfo().Memory,
+			},
 			Moniker:        ctx.Moniker(),
 			Operator:       ctx.Operator().String(),
 			Peers:          ctx.Service().PeerCount(),
